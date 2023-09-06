@@ -24,6 +24,13 @@ public class PlayerController : MonoBehaviour
 
     private float horizontal, vertical;
 
+    [SerializeField] private Vector2 boxSize;
+
+    [Header("Punch Settings")]
+    [SerializeField] private float jabCounter;
+    [SerializeField] private float jabDelay;
+
+
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -33,16 +40,19 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Movement();
+       
     }
 
     private void FixedUpdate()
     {
-        playerRb.velocity = new(horizontal * speed, playerRb.velocity.y, vertical * speed);
+        playerRb.velocity = new(horizontal * speed, playerRb.velocity.y, vertical * speed);      
+        var hitColliders = Physics.OverlapBox(groundCheck.position, boxSize,Quaternion.identity, groundMask);
+        isGround = hitColliders.Length > 0;
 
-        isGround = Physics.Linecast(transform.position + new Vector3(0,0.1f,0), groundCheck.position, groundMask);
-
-        Debug.DrawLine(transform.position + new Vector3(0, 0.1f, 0), groundCheck.position,Color.red);
- 
+        if (isGround)
+        {
+            isAirKick = false;
+        }
     }
 
     private void LateUpdate()
@@ -55,10 +65,70 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
+        Jump();
+        Punch();
+        Kick();
 
-        
+        if (horizontal > 0 && isLookLeft)
+        {
+            Flip();
+        }
+        else if(horizontal < 0 && !isLookLeft)
+        {
+            Flip();
+        }
     }
 
+    private void Punch()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            StopCoroutine(nameof(ComboPunch));
+            StartCoroutine(ComboPunch());
+            animator.SetBool("walk", false);
+
+            if (jabCounter < 2)
+            {
+                animator.SetTrigger("punchA");
+                jabCounter++;
+            }
+            else
+            {
+                animator.SetTrigger("punchB");
+                jabCounter = 0;
+            }      
+        }
+    }
+
+    private void Kick()
+    {
+        if (Input.GetButtonDown("Fire2") && isGround)
+        {
+            animator.SetBool("walk", false);
+            animator.SetTrigger("kick");
+        }
+
+        if (Input.GetButtonDown("Fire2") && !isGround)
+        {
+            isAirKick = true;
+            animator.SetBool("walk", false);
+            animator.SetTrigger("airKick");
+        }
+    }
+
+    private IEnumerator ComboPunch()
+    {
+        yield return new WaitForSeconds(jabDelay);
+        jabCounter = 0;
+    }
+
+    private void Jump()
+    {
+        if (Input.GetButtonDown("Jump") && isGround)
+        {
+            playerRb.AddForce(new(0, jumpForce, 0));
+        }
+    }
 
     private bool IsWalk()
     {     
@@ -79,9 +149,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isGround", isGround);
         animator.SetBool("walk", IsWalk());
         animator.SetBool("onAir", isAirKick);
+        animator.SetFloat("speedY", playerRb.velocity.y);
     }
 
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(groundCheck.position, boxSize);
+    }
 
 
 }
