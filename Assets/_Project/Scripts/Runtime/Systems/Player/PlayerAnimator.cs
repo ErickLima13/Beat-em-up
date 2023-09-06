@@ -3,6 +3,12 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     private PlayerController playerController;
+
+    private GameObject hitBoxTemp;
+
+    [SerializeField] private Transform hitBoxPostionA, hitBoxPostionB;
+
+
     public Animator Animator
     {
         get; private set;
