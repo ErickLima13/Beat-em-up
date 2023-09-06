@@ -1,23 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-   private Rigidbody playerRb;
-    private Animator animator;
+
+    public bool IsGround
+    {
+        get; private set;
+    }
+
+    public bool IsWalk
+    {
+        get; private set;
+    }
+
+    public bool IsOnTheGround
+    {
+        get; private set;
+    }
+
+    public bool IsAirKick
+    {
+        get; private set;
+    }
+
+    public Rigidbody playerRb;
+    private PlayerAnimator playerAnimator;
 
     public Transform groundCheck;
 
     public LayerMask groundMask;
 
     public bool isLookLeft;
-
-    private bool isGround;
-    private bool isWalk;
-    private bool isAirKick;
 
     public float speed;
     public float jumpForce;
@@ -34,30 +50,24 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+        playerAnimator = GetComponentInChildren<PlayerAnimator>();
     }
 
     private void Update()
     {
         Movement();
-       
     }
 
     private void FixedUpdate()
     {
-        playerRb.velocity = new(horizontal * speed, playerRb.velocity.y, vertical * speed);      
-        var hitColliders = Physics.OverlapBox(groundCheck.position, boxSize,Quaternion.identity, groundMask);
-        isGround = hitColliders.Length > 0;
+        playerRb.velocity = new(horizontal * speed, playerRb.velocity.y, vertical * speed);
+        var hitColliders = Physics.OverlapBox(groundCheck.position, boxSize, Quaternion.identity, groundMask);
+        IsGround = hitColliders.Length > 0;
 
-        if (isGround)
+        if (IsGround)
         {
-            isAirKick = false;
+            IsAirKick = false;
         }
-    }
-
-    private void LateUpdate()
-    {
-        UpdateAnimator();
     }
 
     private void Movement()
@@ -65,15 +75,22 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
+        if (playerAnimator.IsAttack)
+        {
+            horizontal = 0;
+            vertical = 0;
+        }
+
         Jump();
-        Punch();
         Kick();
+        Punch();
+
 
         if (horizontal > 0 && isLookLeft)
         {
             Flip();
         }
-        else if(horizontal < 0 && !isLookLeft)
+        else if (horizontal < 0 && !isLookLeft)
         {
             Flip();
         }
@@ -81,38 +98,42 @@ public class PlayerController : MonoBehaviour
 
     private void Punch()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && !playerAnimator.IsAttack)
         {
+            playerAnimator.SetIsAttack(true);
+
             StopCoroutine(nameof(ComboPunch));
             StartCoroutine(ComboPunch());
-            animator.SetBool("walk", false);
+            playerAnimator.Animator.SetBool("walk", false);
 
             if (jabCounter < 2)
             {
-                animator.SetTrigger("punchA");
+                playerAnimator.Animator.SetTrigger("punchA");
                 jabCounter++;
             }
             else
             {
-                animator.SetTrigger("punchB");
+                playerAnimator.Animator.SetTrigger("punchB");
                 jabCounter = 0;
-            }      
+            }
         }
     }
 
     private void Kick()
     {
-        if (Input.GetButtonDown("Fire2") && isGround)
+        if (Input.GetButtonDown("Fire2") && IsGround && !playerAnimator.IsAttack)
         {
-            animator.SetBool("walk", false);
-            animator.SetTrigger("kick");
+            playerAnimator.SetIsAttack(true);
+
+            playerAnimator.Animator.SetBool("walk", false);
+            playerAnimator.Animator.SetTrigger("kick");
         }
 
-        if (Input.GetButtonDown("Fire2") && !isGround)
+        if (Input.GetButtonDown("Fire2") && !IsGround)
         {
-            isAirKick = true;
-            animator.SetBool("walk", false);
-            animator.SetTrigger("airKick");
+            IsAirKick = true;
+            playerAnimator.Animator.SetBool("walk", false);
+            playerAnimator.Animator.SetTrigger("airKick");
         }
     }
 
@@ -124,15 +145,15 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetButtonDown("Jump") && isGround)
+        if (Input.GetButtonDown("Jump") && IsGround)
         {
             playerRb.AddForce(new(0, jumpForce, 0));
         }
     }
 
-    private bool IsWalk()
-    {     
-        return isWalk = horizontal != 0 || vertical != 0;     
+    public bool Walking()
+    {
+        return IsWalk = horizontal != 0 || vertical != 0;
     }
 
     private void Flip()
@@ -140,18 +161,9 @@ public class PlayerController : MonoBehaviour
         isLookLeft = !isLookLeft;
         float x = transform.localScale.x;
         x *= -1;
-        transform.localScale = new(x,transform.localScale.y,transform.localScale.z);
+        transform.localScale = new(x, transform.localScale.y, transform.localScale.z);
 
     }
-
-    private void UpdateAnimator()
-    {
-        animator.SetBool("isGround", isGround);
-        animator.SetBool("walk", IsWalk());
-        animator.SetBool("onAir", isAirKick);
-        animator.SetFloat("speedY", playerRb.velocity.y);
-    }
-
 
     private void OnDrawGizmos()
     {
