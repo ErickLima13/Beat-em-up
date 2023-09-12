@@ -19,4 +19,10 @@ public class Hitbox : MonoBehaviour
             Destroy(temp,0.3f);
         }
     }
+
+
+    private void OnDisable()
+    {
+        isHit = false;
+    }
 }

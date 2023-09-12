@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
             if (playerAnimator.temp != null && idAttack == 3)
             {
-                Destroy(playerAnimator.temp);
+                playerAnimator.objectPool.ReturnObject(playerAnimator.temp, 0.3f);
             }
         }
     }

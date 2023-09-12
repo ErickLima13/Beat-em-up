@@ -1,3 +1,4 @@
+using System.Reflection;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -9,6 +10,8 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private Transform hitBoxPostionA, hitBoxPostionB;
 
     public GameObject temp;
+
+    public ObjectPool objectPool;
 
     public Animator Animator
     {
@@ -52,12 +55,23 @@ public class PlayerAnimator : MonoBehaviour
 
         if (playerController.idAttack != 3)
         {
-            temp = Instantiate(hitBoxPrefab,hitBoxPostionA.position,transform.localRotation);
-            Destroy(temp,0.3f);
+            temp = objectPool.GetObject();
+            temp.transform.position = hitBoxPostionA.position;
+            temp.transform.localRotation = transform.localRotation;
+            //Instantiate(hitBoxPrefab,hitBoxPostionA.position,transform.localRotation);
+
+            // Destroy(temp,0.3f);
+
+            objectPool.ReturnObject(temp, 0.3f);
+           
         }
         else
         {
-            temp = Instantiate(hitBoxPrefab, hitBoxPostionB.position, transform.localRotation);
+            temp = objectPool.GetObject();
+            temp.transform.position = hitBoxPostionB.position;
+            temp.transform.localRotation = transform.localRotation;
+
+           // temp = Instantiate(hitBoxPrefab, hitBoxPostionB.position, transform.localRotation);
         }
     }
 

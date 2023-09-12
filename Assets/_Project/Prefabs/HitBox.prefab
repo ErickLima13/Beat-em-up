@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5596810442642917686}
   - component: {fileID: 8874275529281052726}
   - component: {fileID: 5594547619029668741}
+  - component: {fileID: 1364566051335152810}
   m_Layer: 8
   m_Name: HitBox
   m_TagString: Untagged
@@ -67,3 +68,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popUp: {fileID: 5965592482959146338, guid: 255d258c36156f541b4d7e78074c75a6, type: 3}
+  damageValue: 0
+--- !u!114 &1364566051335152810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4592789735638156382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3fc8bca9e9bf4e4ea110a70e8c8f452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPool: {fileID: 0}
