@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jabCounter;
     [SerializeField] private float jabDelay;
 
+    public int idAttack;
 
     private void Start()
     {
@@ -67,6 +68,11 @@ public class PlayerController : MonoBehaviour
         if (IsGround)
         {
             IsAirKick = false;
+
+            if (playerAnimator.temp != null && idAttack == 3)
+            {
+                Destroy(playerAnimator.temp);
+            }
         }
     }
 
@@ -108,11 +114,13 @@ public class PlayerController : MonoBehaviour
 
             if (jabCounter < 2)
             {
+                idAttack = 0;
                 playerAnimator.Animator.SetTrigger("punchA");
                 jabCounter++;
             }
             else
             {
+                idAttack = 1;
                 playerAnimator.Animator.SetTrigger("punchB");
                 jabCounter = 0;
             }
@@ -123,6 +131,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && IsGround && !playerAnimator.IsAttack)
         {
+            idAttack = 2;
             playerAnimator.SetIsAttack(true);
 
             playerAnimator.Animator.SetBool("walk", false);
@@ -131,9 +140,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire2") && !IsGround)
         {
+            idAttack = 3;
             IsAirKick = true;
             playerAnimator.Animator.SetBool("walk", false);
             playerAnimator.Animator.SetTrigger("airKick");
+           
         }
     }
 

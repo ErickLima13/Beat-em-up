@@ -4,10 +4,11 @@ public class PlayerAnimator : MonoBehaviour
 {
     private PlayerController playerController;
 
-    private GameObject hitBoxTemp;
+    [SerializeField] private GameObject hitBoxPrefab;
 
     [SerializeField] private Transform hitBoxPostionA, hitBoxPostionB;
 
+    public GameObject temp;
 
     public Animator Animator
     {
@@ -25,6 +26,15 @@ public class PlayerAnimator : MonoBehaviour
         Animator = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        if (temp != null && playerController.idAttack == 3 && !playerController.IsGround)
+        {
+            temp.transform.position = hitBoxPostionB.position;
+            print(temp.transform.position);
+        }
+    }
+
     private void LateUpdate()
     {
         UpdateAnimator();
@@ -37,7 +47,18 @@ public class PlayerAnimator : MonoBehaviour
 
     public void SpawnHitBox()
     {
+        //Time.timeScale = 0;
+       
 
+        if (playerController.idAttack != 3)
+        {
+            temp = Instantiate(hitBoxPrefab,hitBoxPostionA.position,transform.localRotation);
+            Destroy(temp,0.3f);
+        }
+        else
+        {
+            temp = Instantiate(hitBoxPrefab, hitBoxPostionB.position, transform.localRotation);
+        }
     }
 
     public void SetIsAttack(bool value)

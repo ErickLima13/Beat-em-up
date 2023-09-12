@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6030223407923755180}
   - component: {fileID: 4591127163246310778}
   m_Layer: 0
-  m_Name: pow-smack-bang
+  m_Name: powPopUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

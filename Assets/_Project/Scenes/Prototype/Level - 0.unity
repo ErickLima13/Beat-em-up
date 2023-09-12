@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 195219125}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1918, y: 0.2067, z: 0}
+  m_LocalPosition: {x: -0.196, y: 0.2067, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -273,8 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79718e502e697848abb54fc2222d8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitBoxPrefab: {fileID: 4592789735638156382, guid: 702237474b09078428ed98ef730abc1f, type: 3}
   hitBoxPostionA: {fileID: 195219126}
   hitBoxPostionB: {fileID: 906974770}
+  temp: {fileID: 0}
 --- !u!1 &355470245
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +561,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906974769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1918, y: 0.085, z: 0}
+  m_LocalPosition: {x: -0.196, y: 0.085, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -712,6 +714,7 @@ MonoBehaviour:
   boxSize: {x: 0.17, y: 0.02}
   jabCounter: 0
   jabDelay: 1
+  idAttack: 0
 --- !u!54 &1858648118
 Rigidbody:
   m_ObjectHideFlags: 0
