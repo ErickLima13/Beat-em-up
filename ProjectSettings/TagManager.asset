@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Scenery
+    uniqueID: 3482223553
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
