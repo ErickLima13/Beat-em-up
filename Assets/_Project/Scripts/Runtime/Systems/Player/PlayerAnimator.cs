@@ -34,7 +34,7 @@ public class PlayerAnimator : MonoBehaviour
         if (temp != null && playerController.idAttack == 3 && !playerController.IsGround)
         {
             temp.transform.position = hitBoxPostionB.position;
-            print(temp.transform.position);
+           
         }
     }
 
@@ -62,7 +62,9 @@ public class PlayerAnimator : MonoBehaviour
 
             // Destroy(temp,0.3f);
 
-            objectPool.ReturnObject(temp, 0.3f);
+            temp.GetComponent<Hitbox>().SetDamage(playerController.idAttack);
+
+            objectPool.ReturnObject(temp, 0.5f);
            
         }
         else
@@ -70,6 +72,7 @@ public class PlayerAnimator : MonoBehaviour
             temp = objectPool.GetObject();
             temp.transform.position = hitBoxPostionB.position;
             temp.transform.localRotation = transform.localRotation;
+            temp.GetComponent<Hitbox>().SetDamage(playerController.idAttack);
 
            // temp = Instantiate(hitBoxPrefab, hitBoxPostionB.position, transform.localRotation);
         }

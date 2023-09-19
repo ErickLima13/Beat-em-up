@@ -1,4 +1,4 @@
-using Unity.Mathematics;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyA : MonoBehaviour
@@ -13,8 +13,11 @@ public class EnemyA : MonoBehaviour
     private Vector3 dirPlayer;
 
     public bool isLookLeft;
+    public bool canHit;
+
 
     [SerializeField] private float speed;
+    [SerializeField] private float delayTime;
 
     private void Start()
     {
@@ -35,17 +38,29 @@ public class EnemyA : MonoBehaviour
 
         dirPlayer = playerController.transform.position - transform.position;
 
-        movHorizontal = dirPlayer.x / Mathf.Abs(dirPlayer.x);
+        if (!canHit)
+        {
+            movHorizontal = dirPlayer.x / Mathf.Abs(dirPlayer.x);
+            movVertical = dirPlayer.z / Mathf.Abs(dirPlayer.z);
 
-        movVertical = dirPlayer.z / Mathf.Abs(dirPlayer.z);
-        
-        enemyRb.velocity = new Vector3(movHorizontal * speed,enemyRb.velocity.y,movVertical * speed);
+            if (float.IsNaN(movHorizontal))
+                movHorizontal = 0;
+            if (float.IsNaN(movVertical))
+                movVertical = 0;
+        }
+        else
+        {
+            movHorizontal = 0;
+            movVertical = 0;    
+        }
+
+        enemyRb.velocity = new Vector3(movHorizontal * speed, enemyRb.velocity.y, movVertical * speed);
 
         if (transform.position.x < posXplayer && isLookLeft)
         {
             Flip();
         }
-        else if(transform.position.x > posXplayer && !isLookLeft)
+        else if (transform.position.x > posXplayer && !isLookLeft)
         {
             Flip();
         }
@@ -57,5 +72,17 @@ public class EnemyA : MonoBehaviour
         float x = transform.localScale.x;
         x *= -1;
         transform.localScale = new(x, transform.localScale.y, transform.localScale.z);
+    }
+
+    public void GetHit()
+    {
+        StartCoroutine(DelayHit());
+    }
+
+    private IEnumerator DelayHit()
+    {
+        canHit = true;
+        yield return new WaitForSeconds(delayTime);
+        canHit = false;
     }
 }
