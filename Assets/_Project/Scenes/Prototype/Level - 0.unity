@@ -1098,8 +1098,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLookLeft: 0
   canHit: 0
+  canAttack: 0
   speed: 0.1
   delayTime: 1
+  delayAttack: 0.1
+  delayNewAttack: 1
+  maxDistancePlayer: 0.25
+  percStopAttack: 50
 --- !u!114 &1251865881
 MonoBehaviour:
   m_ObjectHideFlags: 0
