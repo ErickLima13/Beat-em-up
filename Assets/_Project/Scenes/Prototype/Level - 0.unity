@@ -1096,15 +1096,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0647241b8931545bc337d068407a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
+  speed: 0.2
+  maxDistancePlayer: 0.25
+  percStopAttack: 50
   isLookLeft: 0
   canHit: 0
-  canAttack: 0
-  speed: 0.1
   delayTime: 1
   delayAttack: 0.1
   delayNewAttack: 1
-  maxDistancePlayer: 0.25
-  percStopAttack: 50
+  chaseTime: 25
+  canAttack: 0
+  isChase: 0
+  safeDistance: 1.2
+  minTime: 1
+  maxTime: 4
 --- !u!114 &1251865881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1585,7 +1591,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1858648115}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.02073994, z: -0.5}
+  m_LocalPosition: {x: 0.78, y: -0.02073994, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
