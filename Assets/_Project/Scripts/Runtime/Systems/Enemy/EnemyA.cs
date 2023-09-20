@@ -44,7 +44,7 @@ public class EnemyA : MonoBehaviour
 
     [Header("Escape")]
     [SerializeField] private float safeDistance;
-    [SerializeField] private float minTime,maxTime;
+    [SerializeField] private float minTime, maxTime;
     private float timeTemp;
     private bool isWalk;
     private float walkTime;
@@ -100,7 +100,7 @@ public class EnemyA : MonoBehaviour
             if (!isChase)
             {
                 isChase = true;
-                StartCoroutine(EndChase());
+                StartCoroutine(nameof(EndChase));
             }
         }
 
@@ -127,7 +127,7 @@ public class EnemyA : MonoBehaviour
         {
             timeTemp = 0;
             isWalk = false;
-        } 
+        }
     }
 
     private void Chase()
@@ -153,7 +153,7 @@ public class EnemyA : MonoBehaviour
                 if (!canHit)
                 {
                     canAttack = true;
-                    StartCoroutine(Attack());
+                    StartCoroutine(nameof(Attack));
                 }
             }
         }
@@ -216,7 +216,7 @@ public class EnemyA : MonoBehaviour
             StopAttack();
         }
 
-        StartCoroutine(DelayHit());
+        StartCoroutine(nameof (DelayHit));
     }
 
     private IEnumerator DelayHit()

@@ -1,6 +1,4 @@
-using Unity.Mathematics;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Hitbox : MonoBehaviour
 {
@@ -32,9 +30,9 @@ public class Hitbox : MonoBehaviour
                     break;
             }
 
-            col.gameObject.SendMessage("GetHit",SendMessageOptions.DontRequireReceiver);
+            col.gameObject.SendMessage("GetHit", SendMessageOptions.DontRequireReceiver);
 
-            if(col.gameObject.TryGetComponent(out Status status))
+            if (col.gameObject.TryGetComponent(out Status status))
             {
                 status.HealthChange(damage);
             }

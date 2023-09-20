@@ -5,17 +5,35 @@ public class Status : MonoBehaviour
 {
     public event Action OnDie;
 
+    private UIManager _uIManager;
+
     [SerializeField] private GameObject hitPrefab;
 
-    public int maxLife;
+    [SerializeField] private int maxLife;
+    private int currentLife;
+
+    private void Start()
+    {
+        _uIManager = FindObjectOfType<UIManager>();
+        currentLife = maxLife;
+    }
 
     public void HealthChange(int value)
     {
         //GameObject temp = Instantiate(hitPrefab, transform.position, Quaternion.identity);
         //Destroy(temp, 0.5f);
-        maxLife -= value;
+        currentLife -= value;
 
-        if (maxLife <= 0)
+        float perc = currentLife / (float)maxLife;
+
+        if (perc < 0)
+        {
+            perc = 0;
+        }
+
+        _uIManager.UpdateHpBar(perc);
+
+        if (currentLife <= 0)
         {
             OnDie?.Invoke();
             Destroy(gameObject, 0.1f);
