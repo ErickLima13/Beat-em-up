@@ -10,6 +10,7 @@ public class Status : MonoBehaviour
     [SerializeField] private GameObject hitPrefab;
 
     [SerializeField] private int maxLife;
+    [SerializeField] private string charName;
     private int currentLife;
 
     private void Start()
@@ -31,7 +32,7 @@ public class Status : MonoBehaviour
             perc = 0;
         }
 
-        _uIManager.UpdateHpBar(perc);
+        _uIManager.UpdateHpBar(perc,charName);
 
         if (currentLife <= 0)
         {

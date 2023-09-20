@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _hpBar;
     [SerializeField] private Gradient _gradient;
     [SerializeField] private float _disableTime;
+    [SerializeField] private TextMeshProUGUI _nameEnemy;
 
     private void Start()
     {
@@ -15,11 +17,12 @@ public class UIManager : MonoBehaviour
         _panelEnemyHp.SetActive(false);
     }
 
-    public void UpdateHpBar(float hp)
+    public void UpdateHpBar(float hp, string name)
     {
         StopCoroutine(nameof(DisablePanel));
         StartCoroutine(nameof(DisablePanel));
 
+        _nameEnemy.text = name;
         _hpBar.fillAmount = hp;
         _hpBar.color = _gradient.Evaluate(hp);
         _panelEnemyHp.SetActive(true);
