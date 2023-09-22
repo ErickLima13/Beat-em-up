@@ -96,7 +96,7 @@ public class EnemyA : MonoBehaviour
 
         if (MathF.Abs(dirPlayer.x) <= perc)
         {
-            currentState = EnemyState.Chase;
+            ChangeState(EnemyState.Chase);
             if (!isChase)
             {
                 isChase = true;
@@ -174,7 +174,7 @@ public class EnemyA : MonoBehaviour
         }
         else
         {
-            currentState = EnemyState.Patrol;
+            ChangeState(EnemyState.Patrol);
         }
     }
 
@@ -186,7 +186,12 @@ public class EnemyA : MonoBehaviour
         yield return new WaitForSeconds(chaseTime);
         print("esperei o tempo");
         isChase = false;
-        currentState = EnemyState.Escape;
+        ChangeState(EnemyState.Escape);
+    }
+
+    public void ChangeState(EnemyState newState)
+    {
+        currentState = newState;
     }
 
     private void FlipController()
@@ -211,6 +216,8 @@ public class EnemyA : MonoBehaviour
 
     public void GetHit()
     {
+        ChangeState(EnemyState.Chase);
+
         if (Random.Range(0, 100) <= percStopAttack)
         {
             StopAttack();

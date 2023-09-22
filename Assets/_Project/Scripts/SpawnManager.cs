@@ -15,11 +15,57 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private float _outCam;
 
+    public float minTime, maxTime;
+    private float tempTime, routineTime;
+    private bool isActive;
+
     private void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
         _sceneryManager = GetComponent<SceneryManager>();
         _camera = Camera.main;
+    }
+
+    private void Update()
+    {
+        ControlEnemies();
+    }
+
+    private void ControlEnemies()
+    {
+        if(_enemiesActive.Count > 0)
+        {
+            if(!isActive)
+            {
+                routineTime = Random.Range(minTime, maxTime);
+                isActive = true;
+            }
+
+            tempTime += Time.deltaTime;
+
+            if(tempTime >= routineTime)
+            {
+                int id = Random.Range(0, _enemiesActive.Count);
+
+                foreach (GameObject enemy in _enemiesActive)
+                {
+                    int percMov = Random.Range(0, 99);
+
+                    if (percMov < 50)
+                    {
+                        enemy.SendMessage("ChangeState", EnemyState.Escape, SendMessageOptions.DontRequireReceiver);
+                    }
+                    else
+                    {
+                        enemy.SendMessage("ChangeState", EnemyState.Patrol, SendMessageOptions.DontRequireReceiver);
+                    }
+                }
+
+                _enemiesActive[id].SendMessage("ChangeState", EnemyState.Chase, SendMessageOptions.DontRequireReceiver);
+                tempTime = 0;
+                isActive = false;
+            }
+        }
     }
 
     public void StartSpawn()
@@ -61,5 +107,7 @@ public class SpawnManager : MonoBehaviour
         {
             _sceneryManager.SetFollow(true);
         }
+
+        
     }
 }

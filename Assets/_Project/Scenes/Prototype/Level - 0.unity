@@ -277,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemiesPrefab:
   - {fileID: 4528717029049258482, guid: 879c5deaa6214174c8621bb6d732bed7, type: 3}
-  _qtdEnemies: 2
+  _qtdEnemies: 3
   _spawnInterval: 2
 --- !u!65 &102760811
 BoxCollider:
@@ -1148,6 +1148,8 @@ MonoBehaviour:
   _idEnemy: 0
   _interval: 0
   _outCam: 1.2
+  minTime: 2
+  maxTime: 3
 --- !u!1 &336853133
 GameObject:
   m_ObjectHideFlags: 0
