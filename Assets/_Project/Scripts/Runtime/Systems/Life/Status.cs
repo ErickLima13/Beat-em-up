@@ -1,22 +1,36 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Status : MonoBehaviour
 {
     public event Action OnDie;
+  
 
     private UIManager _uIManager;
+    private SpawnManager _spawnManager;
 
     [SerializeField] private GameObject hitPrefab;
 
     [SerializeField] private int maxLife;
     [SerializeField] private string charName;
+    [SerializeField] private string[] randomNames;
+    [SerializeField] private Sprite charPicture;
+    [SerializeField] private bool isEnemy;
     private int currentLife;
+
 
     private void Start()
     {
         _uIManager = FindObjectOfType<UIManager>();
+        _spawnManager = FindObjectOfType<SpawnManager>();
         currentLife = maxLife;
+
+        if (isEnemy)
+        {
+            charName = randomNames[Random.Range(0, randomNames.Length)];
+        }
+       
     }
 
     public void HealthChange(int value)
@@ -32,12 +46,22 @@ public class Status : MonoBehaviour
             perc = 0;
         }
 
-        _uIManager.UpdateHpBar(perc,charName);
+        if(isEnemy)
+        {
+            _uIManager.UpdateHpBar(perc, charName);
+        }
 
         if (currentLife <= 0)
         {
-            OnDie?.Invoke();
-            Destroy(gameObject, 0.1f);
+            if (isEnemy)
+            {
+                _spawnManager.RemoveEnemies(gameObject);
+                Destroy(gameObject, 0.3f);
+            }
+            else
+            {
+                OnDie?.Invoke();
+            } 
         }
     }
 }

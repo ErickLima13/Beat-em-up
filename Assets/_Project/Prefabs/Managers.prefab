@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8621665256287138942}
   - component: {fileID: 805883677757267342}
+  - component: {fileID: 3702338997286142769}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -77,3 +78,19 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   _disableTime: 3
+  _nameEnemy: {fileID: 0}
+  _pictureEnemy: {fileID: 0}
+--- !u!114 &3702338997286142769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2621554356808910470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2852bd3753e6f7a43b2f19efcadb56dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canFollow: 0
+  _speedCam: 1

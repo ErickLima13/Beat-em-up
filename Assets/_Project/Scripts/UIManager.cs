@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Gradient _gradient;
     [SerializeField] private float _disableTime;
     [SerializeField] private TextMeshProUGUI _nameEnemy;
+    [SerializeField] private Image _pictureEnemy;
 
     private void Start()
     {
