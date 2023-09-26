@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyA : MonoBehaviour
+public class Boss : MonoBehaviour
 {
     public EnemyState currentState;
 
@@ -216,7 +216,7 @@ public class EnemyA : MonoBehaviour
             StopAttack();
         }
 
-        StartCoroutine(nameof (DelayHit));
+        StartCoroutine(nameof(DelayHit));
     }
 
     private IEnumerator DelayHit()
@@ -240,3 +240,4 @@ public class EnemyA : MonoBehaviour
         canAttack = false;
     }
 }
+

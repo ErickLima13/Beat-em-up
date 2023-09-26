@@ -62,7 +62,7 @@ public class PlayerAnimator : MonoBehaviour
 
             // Destroy(temp,0.3f);
 
-            temp.GetComponent<Hitbox>().SetDamage(playerController.idAttack);
+            temp.GetComponent<Hitbox>().SetIdvalue(playerController.idAttack);
 
             objectPool.ReturnObject(temp, 0.5f);
            
@@ -72,7 +72,7 @@ public class PlayerAnimator : MonoBehaviour
             temp = objectPool.GetObject();
             temp.transform.position = hitBoxPostionB.position;
             temp.transform.localRotation = transform.localRotation;
-            temp.GetComponent<Hitbox>().SetDamage(playerController.idAttack);
+            temp.GetComponent<Hitbox>().SetIdvalue(playerController.idAttack);
 
            // temp = Instantiate(hitBoxPrefab, hitBoxPostionB.position, transform.localRotation);
         }

@@ -8,26 +8,32 @@ public class Hitbox : MonoBehaviour
 
     [SerializeField] private int damage;
 
+    [SerializeField] private bool isEnemy;
+
     private bool isHit;
+
 
     private void OnTriggerEnter(Collider col)
     {
         if (!isHit)
         {
-            switch (idValue)
+            if (!isEnemy)
             {
-                case 0:
-                    damage = 1;
-                    break;
-                case 1:
-                    damage = 3;
-                    break;
-                case 2:
-                    damage = 2;
-                    break;
-                case 3:
-                    damage = 1;
-                    break;
+                switch (idValue)
+                {
+                    case 0:
+                        damage = 1;
+                        break;
+                    case 1:
+                        damage = 3;
+                        break;
+                    case 2:
+                        damage = 2;
+                        break;
+                    case 3:
+                        damage = 1;
+                        break;
+                }
             }
 
             col.gameObject.SendMessage("GetHit", SendMessageOptions.DontRequireReceiver);
@@ -35,6 +41,8 @@ public class Hitbox : MonoBehaviour
             if (col.gameObject.TryGetComponent(out Status status))
             {
                 status.HealthChange(damage);
+
+                print(damage);
             }
 
             isHit = true;
@@ -43,9 +51,14 @@ public class Hitbox : MonoBehaviour
         }
     }
 
-    public void SetDamage(int value)
+    public void SetIdvalue(int value)
     {
         idValue = value;
+    }
+
+    public void SetDamage(int d)
+    {
+        damage = d;
     }
 
     private void OnDisable()

@@ -587,7 +587,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_15
+      name: bw
       rect:
         serializedVersion: 2
         x: 0
@@ -608,7 +608,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_16
+      name: bw1
       rect:
         serializedVersion: 2
         x: 48
@@ -629,7 +629,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_17
+      name: bw2
       rect:
         serializedVersion: 2
         x: 96
@@ -650,7 +650,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_18
+      name: bw3
       rect:
         serializedVersion: 2
         x: 144
@@ -734,7 +734,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_22
+      name: bi4
       rect:
         serializedVersion: 2
         x: 0
@@ -755,7 +755,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_23
+      name: bi5
       rect:
         serializedVersion: 2
         x: 48
@@ -776,7 +776,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_24
+      name: bi6
       rect:
         serializedVersion: 2
         x: 96
@@ -797,7 +797,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_25
+      name: bi7
       rect:
         serializedVersion: 2
         x: 144
@@ -860,11 +860,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_28
+      name: ba8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 272
+        x: 1
+        y: 271
         width: 48
         height: 48
       alignment: 7
@@ -881,7 +881,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_29
+      name: ba9
       rect:
         serializedVersion: 2
         x: 48
@@ -902,7 +902,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_30
+      name: ba10
       rect:
         serializedVersion: 2
         x: 96
@@ -1114,7 +1114,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 868b9cf1f94fc7a4b93c4269eb7d23c0
     internalID: 0
     vertices: []
     indices: 
@@ -1122,6 +1122,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      ba10: 21300060
+      ba8: 21300056
+      ba9: 21300058
+      bi4: 21300044
+      bi5: 21300046
+      bi6: 21300048
+      bi7: 21300050
+      bw: 21300030
+      bw1: 21300032
+      bw2: 21300034
+      bw3: 21300036
       foes_0: 21300000
       foes_1: 21300002
       foes_10: 21300020
@@ -1129,24 +1140,13 @@ TextureImporter:
       foes_12: 21300024
       foes_13: 21300026
       foes_14: 21300028
-      foes_15: 21300030
-      foes_16: 21300032
-      foes_17: 21300034
-      foes_18: 21300036
       foes_19: 21300038
       foes_2: 21300004
       foes_20: 21300040
       foes_21: 21300042
-      foes_22: 21300044
-      foes_23: 21300046
-      foes_24: 21300048
-      foes_25: 21300050
       foes_26: 21300052
       foes_27: 21300054
-      foes_28: 21300056
-      foes_29: 21300058
       foes_3: 21300006
-      foes_30: 21300060
       foes_31: 21300062
       foes_32: 21300064
       foes_33: 21300066

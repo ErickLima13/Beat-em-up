@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy
+      name: Heads.fw_0
       rect:
         serializedVersion: 2
         x: 5
@@ -144,20 +144,20 @@ TextureImporter:
         width: 18
         height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53a009123000ec1408ff89f5242f4937
-      internalID: 1602475968
+      spriteID: ed3636d090d798a45959e2c1d25b1474
+      internalID: 2101213747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bg
+      name: Heads.fw_1
       rect:
         serializedVersion: 2
         x: 30
@@ -165,20 +165,20 @@ TextureImporter:
         width: 18
         height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 111ab26998b1d6148b8264a12c40430d
-      internalID: 1498966158
+      spriteID: f0f2484b9cb2ee845913e76331d92f05
+      internalID: 886004024
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hero
+      name: Heads.fw_2
       rect:
         serializedVersion: 2
         x: 55
@@ -186,14 +186,35 @@ TextureImporter:
         width: 20
         height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dffee4ed5ba158a45acbd4f96333f411
-      internalID: -2077598925
+      spriteID: 1f8ba66d59a269e44a0c2c83c0cbdc45
+      internalID: 1163940784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heads.fw_3
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 101
+        width: 32
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d8b9603cce117649b6ea80e1a88a4e9
+      internalID: -1349469814
       vertices: []
       indices: 
       edges: []
@@ -209,9 +230,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Bg: 1498966158
-      Enemy: 1602475968
-      Hero: -2077598925
+      Heads.fw_0: 2101213747
+      Heads.fw_1: 886004024
+      Heads.fw_2: 1163940784
+      Heads.fw_3: -1349469814
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

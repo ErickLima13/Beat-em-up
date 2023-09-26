@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 public class Status : MonoBehaviour
 {
     public event Action OnDie;
-  
 
     private UIManager _uIManager;
     private SpawnManager _spawnManager;
@@ -46,9 +45,14 @@ public class Status : MonoBehaviour
             perc = 0;
         }
 
-        if(isEnemy)
+        if (isEnemy)
         {
-            _uIManager.UpdateHpBar(perc, charName);
+            _uIManager.UpdateHpBar(perc, charName, charPicture);
+        }
+        else
+        {
+            _uIManager.UpdateHpBarPlayer(perc);
+            print(perc);
         }
 
         if (currentLife <= 0)
