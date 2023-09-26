@@ -1,9 +1,13 @@
+using System.Collections;
 using System.Reflection;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
     private PlayerController playerController;
+    private Status _status;
+
+    [SerializeField] private float delayTime;
 
     [SerializeField] private GameObject hitBoxPrefab;
 
@@ -12,6 +16,8 @@ public class PlayerAnimator : MonoBehaviour
     public GameObject temp;
 
     public ObjectPool objectPool;
+
+    private bool canHit;
 
     public Animator Animator
     {
@@ -26,7 +32,17 @@ public class PlayerAnimator : MonoBehaviour
     private void Start()
     {
         playerController = GetComponentInParent<PlayerController>();
+        _status = GetComponentInParent<Status>();
         Animator = GetComponent<Animator>();
+
+        _status.OnDie += Die;
+        _status.OnPlayerDamage += GetHit;
+    }
+
+    private void OnDestroy()
+    {
+        _status.OnDie -= Die;
+        _status.OnPlayerDamage -= GetHit;
     }
 
     private void Update()
@@ -34,13 +50,15 @@ public class PlayerAnimator : MonoBehaviour
         if (temp != null && playerController.idAttack == 3 && !playerController.IsGround)
         {
             temp.transform.position = hitBoxPostionB.position;
-           
         }
     }
 
     private void LateUpdate()
     {
-        UpdateAnimator();
+        if (playerController.isAlive)
+        {
+            UpdateAnimator();
+        }
     }
 
     public void EndAttack()
@@ -81,6 +99,28 @@ public class PlayerAnimator : MonoBehaviour
     public void SetIsAttack(bool value)
     {
         IsAttack = value;
+    }
+
+    private void Die()
+    {
+        playerController.isAlive = false;
+        Animator.SetTrigger("die");
+    }
+
+    public void GetHit()
+    {
+        if (playerController.isAlive)
+        {
+            Animator.SetTrigger("hit");
+            StartCoroutine(nameof(DelayHit));
+        }   
+    }
+
+    private IEnumerator DelayHit()
+    {
+        canHit = true;
+        yield return new WaitForSeconds(delayTime);
+        canHit = false;
     }
 
     private void UpdateAnimator()

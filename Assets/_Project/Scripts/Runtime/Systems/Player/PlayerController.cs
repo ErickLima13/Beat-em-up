@@ -47,15 +47,26 @@ public class PlayerController : MonoBehaviour
 
     public int idAttack;
 
+    public bool isAlive;
+
     private void Start()
     {
+        isAlive = true;
         playerRb = GetComponent<Rigidbody>();
-        playerAnimator = GetComponentInChildren<PlayerAnimator>();
+        playerAnimator = GetComponentInChildren<PlayerAnimator>();    
     }
 
     private void Update()
     {
-        Movement();
+        if (isAlive)
+        {
+            Movement();
+        }
+        else
+        {
+            horizontal = 0;
+            vertical = 0;
+        }
     }
 
     private void FixedUpdate()

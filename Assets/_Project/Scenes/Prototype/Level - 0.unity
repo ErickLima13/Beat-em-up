@@ -6034,7 +6034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 4592789735638156382, guid: 702237474b09078428ed98ef730abc1f, type: 3}
   parent: {fileID: 1982680429}
-  poolSize: 10
+  poolSize: 20
   index: 0
 --- !u!4 &1769531354
 Transform:
@@ -6451,6 +6451,7 @@ MonoBehaviour:
   jabCounter: 0
   jabDelay: 1
   idAttack: 0
+  isAlive: 1
 --- !u!54 &1858648118
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6514,7 +6515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPrefab: {fileID: 0}
-  maxLife: 6
+  maxLife: 15
   charName: Rubens
   randomNames: []
   charPicture: {fileID: 0}
@@ -6566,7 +6567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 8233987117510416868, guid: 1ff2dee5a5889cd4392e4bf967421e41, type: 3}
   parent: {fileID: 1728428678}
-  poolSize: 10
+  poolSize: 20
   index: 0
 --- !u!1 &1915546224
 GameObject:

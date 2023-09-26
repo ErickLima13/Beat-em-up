@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 public class Status : MonoBehaviour
 {
     public event Action OnDie;
+    public event Action OnPlayerDamage;
 
     private UIManager _uIManager;
     private SpawnManager _spawnManager;
@@ -52,7 +53,7 @@ public class Status : MonoBehaviour
         else
         {
             _uIManager.UpdateHpBarPlayer(perc);
-            print(perc);
+            OnPlayerDamage?.Invoke();
         }
 
         if (currentLife <= 0)
