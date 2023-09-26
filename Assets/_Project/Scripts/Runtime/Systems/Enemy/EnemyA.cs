@@ -78,6 +78,15 @@ public class EnemyA : MonoBehaviour
         if (float.IsNaN(movVertical))
             movVertical = 0;
 
+        if (movHorizontal != 0 || movVertical != 0)
+        {
+            animator.SetBool("walk", true);
+        }
+        else if (movHorizontal == 0 && movVertical == 0)
+        {
+            animator.SetBool("walk", false);
+        }
+
         enemyRb.velocity = new Vector3(movHorizontal * speed, enemyRb.velocity.y, movVertical * speed);
     }
 

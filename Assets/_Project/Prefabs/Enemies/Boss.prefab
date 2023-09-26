@@ -122,8 +122,6 @@ MonoBehaviour:
   damage: 3
   hitBoxPrefab: {fileID: 8233987117510416868, guid: 1ff2dee5a5889cd4392e4bf967421e41, type: 3}
   hitBoxPostion: {fileID: 1663251115764013884}
-  temp: {fileID: 0}
-  objectPool: {fileID: 0}
 --- !u!1 &5593465317004039507
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +157,7 @@ Transform:
   - {fileID: 8278461118596227961}
   - {fileID: 1663251115764013884}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &192746556679816136
 Rigidbody:
@@ -212,7 +210,7 @@ MonoBehaviour:
   chaseTime: 25
   canAttack: 0
   isChase: 0
-  safeDistance: 1.2
+  safeDistance: 0.5
   minTime: 1
   maxTime: 4
 --- !u!136 &4510215271753409025

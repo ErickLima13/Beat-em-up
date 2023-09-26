@@ -63,27 +63,24 @@ public class PlayerAnimator : MonoBehaviour
 
     public void EndAttack()
     {
-        IsAttack = false;
+       StartCoroutine(StopAttack());
+    }
+
+    private IEnumerator StopAttack()
+    {
+        yield return new WaitForEndOfFrame();
+        SetIsAttack(false);
     }
 
     public void SpawnHitBox()
     {
-        //Time.timeScale = 0;
-       
-
         if (playerController.idAttack != 3)
         {
             temp = objectPool.GetObject();
             temp.transform.position = hitBoxPostionA.position;
             temp.transform.localRotation = transform.localRotation;
-            //Instantiate(hitBoxPrefab,hitBoxPostionA.position,transform.localRotation);
-
-            // Destroy(temp,0.3f);
-
             temp.GetComponent<Hitbox>().SetIdvalue(playerController.idAttack);
-
-            objectPool.ReturnObject(temp, 0.5f);
-           
+            objectPool.ReturnObject(temp, 0.5f);    
         }
         else
         {
@@ -91,8 +88,6 @@ public class PlayerAnimator : MonoBehaviour
             temp.transform.position = hitBoxPostionB.position;
             temp.transform.localRotation = transform.localRotation;
             temp.GetComponent<Hitbox>().SetIdvalue(playerController.idAttack);
-
-           // temp = Instantiate(hitBoxPrefab, hitBoxPostionB.position, transform.localRotation);
         }
     }
 
@@ -111,6 +106,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (playerController.isAlive)
         {
+            SetIsAttack(false);
             Animator.SetTrigger("hit");
             StartCoroutine(nameof(DelayHit));
         }   

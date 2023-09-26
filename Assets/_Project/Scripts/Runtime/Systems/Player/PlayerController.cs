@@ -49,15 +49,26 @@ public class PlayerController : MonoBehaviour
 
     public bool isAlive;
 
+    public Transform limitXMinus, limitXPlus;
+
     private void Start()
     {
         isAlive = true;
         playerRb = GetComponent<Rigidbody>();
-        playerAnimator = GetComponentInChildren<PlayerAnimator>();    
+        playerAnimator = GetComponentInChildren<PlayerAnimator>();
     }
 
     private void Update()
     {
+        if (transform.position.x < limitXMinus.position.x)
+        {
+            transform.position = new(limitXMinus.position.x, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x > limitXPlus.position.x)
+        {
+            transform.position = new(limitXPlus.position.x, transform.position.y, transform.position.z);
+        }
+
         if (isAlive)
         {
             Movement();
