@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class DamageOnPlayer : MonoBehaviour
 {
+    private Transform _manager;
+    private GameObject temp;
+    private ObjectPool objectPool;
+
     [SerializeField] private int damage;
-
     [SerializeField] private GameObject hitBoxPrefab;
-
     [SerializeField] private Transform hitBoxPostion;
 
-    public GameObject temp;
-
-    public ObjectPool objectPool;
+    private void Start()
+    {
+        _manager = FindObjectOfType<SpawnManager>().transform;
+        objectPool = _manager.GetComponentInChildren<ObjectPool>();
+    }
 
     public void SpawnHitBox()
     {
