@@ -53,6 +53,11 @@ public class Boss : MonoBehaviour
     {
         switch (currentState)
         {
+            case EnemyState.Idle:
+                movHorizontal = 0;
+                movVertical = 0;
+                FlipController();
+                break;
             case EnemyState.Patrol:
                 Patrol();
                 break;
@@ -77,6 +82,15 @@ public class Boss : MonoBehaviour
             movHorizontal = 0;
         if (float.IsNaN(movVertical))
             movVertical = 0;
+
+        if (movHorizontal != 0 || movVertical != 0)
+        {
+            animator.SetBool("walk", true);
+        }
+        else if (movHorizontal == 0 && movVertical == 0)
+        {
+            animator.SetBool("walk", false);
+        }
 
         enemyRb.velocity = new Vector3(movHorizontal * speed, enemyRb.velocity.y, movVertical * speed);
     }
@@ -159,15 +173,11 @@ public class Boss : MonoBehaviour
     private void Escape()
     {
         FlipController();
-
-        if (MathF.Abs(dirPlayer.x) <= safeDistance)
+        movHorizontal = dirPlayer.x / Mathf.Abs(dirPlayer.x) * -1;
+        timeTemp += Time.deltaTime;
+        if (timeTemp >= Random.Range(1, 3))
         {
-            movHorizontal = dirPlayer.x / Mathf.Abs(dirPlayer.x) * -1;
-            movVertical = 0;
-        }
-        else
-        {
-            ChangeState(EnemyState.Patrol);
+            movVertical = Random.Range(-1,2);
         }
     }
 

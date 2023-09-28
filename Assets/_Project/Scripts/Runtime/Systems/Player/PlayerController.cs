@@ -60,11 +60,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.x < limitXMinus.position.x)
+        if (transform.position.x <= limitXMinus.position.x)
         {
             transform.position = new(limitXMinus.position.x, transform.position.y, transform.position.z);
         }
-        else if (transform.position.x > limitXPlus.position.x)
+        else if (transform.position.x >= limitXPlus.position.x)
         {
             transform.position = new(limitXPlus.position.x, transform.position.y, transform.position.z);
         }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    private Camera _camera;
-    private PlayerController _playerController;
+    public Camera _camera;
+    public PlayerController _playerController;
     private SceneryManager _sceneryManager;
 
     public List<GameObject> _enemiesList;
@@ -13,7 +13,7 @@ public class SpawnManager : MonoBehaviour
     public int _idEnemy;
     public float _interval;
 
-    [SerializeField] private float _outCam;
+    public float _outCam;
 
     public float minTime, maxTime;
     private float tempTime, routineTime;
@@ -33,9 +33,9 @@ public class SpawnManager : MonoBehaviour
 
     private void ControlEnemies()
     {
-        if(_enemiesActive.Count > 0)
+        if (_enemiesActive.Count > 0)
         {
-            if(!isActive)
+            if (!isActive)
             {
                 routineTime = Random.Range(minTime, maxTime);
                 isActive = true;
@@ -43,7 +43,7 @@ public class SpawnManager : MonoBehaviour
 
             tempTime += Time.deltaTime;
 
-            if(tempTime >= routineTime)
+            if (tempTime >= routineTime)
             {
                 int id = Random.Range(0, _enemiesActive.Count);
 
@@ -93,7 +93,7 @@ public class SpawnManager : MonoBehaviour
 
         yield return new WaitForSeconds(_interval);
 
-        if(_idEnemy < _enemiesList.Count)
+        if (_idEnemy < _enemiesList.Count)
         {
             StartCoroutine(SpawnEnemy());
         }
@@ -101,13 +101,11 @@ public class SpawnManager : MonoBehaviour
 
     public void RemoveEnemies(GameObject enemy)
     {
-       _enemiesActive.Remove(enemy);
+        _enemiesActive.Remove(enemy);
 
         if (_enemiesActive.Count == 0 && _idEnemy >= _enemiesList.Count)
         {
             _sceneryManager.SetFollow(true);
         }
-
-        
     }
 }

@@ -17,8 +17,10 @@ public class Status : MonoBehaviour
     [SerializeField] private string[] randomNames;
     [SerializeField] private Sprite charPicture;
     [SerializeField] private bool isEnemy;
+    [SerializeField] private bool isLackey;
     private int currentLife;
 
+    private GameObject _boss;
 
     private void Start()
     {
@@ -29,8 +31,13 @@ public class Status : MonoBehaviour
         if (isEnemy)
         {
             charName = randomNames[Random.Range(0, randomNames.Length)];
+           
         }
-       
+
+        if (GetComponent<EnemyA>() != null)
+        {
+            _boss = GetComponent<EnemyA>()._bossScript;
+        }
     }
 
     public void HealthChange(int value)
@@ -56,17 +63,31 @@ public class Status : MonoBehaviour
             OnPlayerDamage?.Invoke();
         }
 
+        CheckDeath();
+        
+    }
+
+    private void CheckDeath()
+    {
         if (currentLife <= 0)
         {
             if (isEnemy)
             {
-                _spawnManager.RemoveEnemies(gameObject);
+                if (isLackey)
+                {
+                    _boss.SendMessage("RemoveLackeys", gameObject, SendMessageOptions.DontRequireReceiver);
+                }
+                else
+                {
+                    _spawnManager.RemoveEnemies(gameObject);
+                }
+
                 Destroy(gameObject, 0.3f);
             }
             else
             {
                 OnDie?.Invoke();
-            } 
+            }
         }
     }
 }

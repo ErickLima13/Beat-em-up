@@ -23,6 +23,8 @@ public class EnemyA : MonoBehaviour
     [SerializeField] private float percStopAttack;
     [SerializeField] private bool isLookLeft;
     [SerializeField] private bool canHit;
+    [SerializeField] private bool isPositionLeft;
+    private IsVisible visible;
     #endregion
 
     #region Chase
@@ -42,17 +44,33 @@ public class EnemyA : MonoBehaviour
     private bool isWalk;
     private float walkTime;
 
+    public GameObject _bossScript;
+    public bool isBoss;
+    private bool isInPosition;
+
+    public bool isVisible;
+
+
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
         enemyRb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        visible = GetComponentInChildren<IsVisible>();
     }
 
     private void Update()
     {
         switch (currentState)
         {
+            case EnemyState.Idle:
+                movHorizontal = 0;
+                movVertical = 0;
+                FlipController();
+                break;
+            case EnemyState.Positioning:
+                Positioning();
+                break;
             case EnemyState.Patrol:
                 Patrol();
                 break;
@@ -88,10 +106,82 @@ public class EnemyA : MonoBehaviour
         }
 
         enemyRb.velocity = new Vector3(movHorizontal * speed, enemyRb.velocity.y, movVertical * speed);
+
+        CheckIfIsInPosition();
+        CheckIsVisible();
+    }
+
+    private void CheckIsVisible()
+    {
+        if (!isVisible)
+        {
+            isVisible = visible.Visible;
+        }
+      
+        if (isVisible)
+        {
+            if (transform.position.x <= playerController.limitXMinus.position.x)
+            {
+                transform.position = new(playerController.limitXMinus.position.x, transform.position.y, transform.position.z);
+            }
+            else if (transform.position.x >= playerController.limitXPlus.position.x)
+            {
+                transform.position = new(playerController.limitXPlus.position.x, transform.position.y, transform.position.z);
+            }
+        }
+    }
+
+    private void CheckIfIsInPosition()
+    {
+        if (isBoss && !isInPosition)
+        {
+            if (isPositionLeft && transform.position.x > posXplayer)
+            {
+                currentState = EnemyState.Positioning;
+            }
+            else if (!isPositionLeft && transform.position.x < posXplayer)
+            {
+                currentState = EnemyState.Positioning;
+            }
+
+            if (isPositionLeft && transform.position.x < posXplayer)
+            {
+                isInPosition = true;
+            }
+            else if (!isPositionLeft && transform.position.x > posXplayer)
+            {
+                isInPosition = true;
+            }
+        }
     }
 
 
     #region States
+
+    private void Positioning()
+    {
+        if (isPositionLeft)
+        {
+            movHorizontal = -1;
+        }
+        else
+        {
+            movHorizontal = 1;
+        }
+
+
+        if (isPositionLeft && transform.position.x < playerController.transform.position.x && MathF.Abs(dirPlayer.x) >= safeDistance)
+        {
+            movHorizontal = 0;
+        }
+        else if (!isPositionLeft && transform.position.x > playerController.transform.position.x && MathF.Abs(dirPlayer.x) >= safeDistance)
+        {
+            movHorizontal = 0;
+        }
+
+        FlipController();
+    }
+
     private void Patrol()
     {
         float perc = safeDistance * 0.5f;
@@ -172,7 +262,11 @@ public class EnemyA : MonoBehaviour
         if (MathF.Abs(dirPlayer.x) <= safeDistance)
         {
             movHorizontal = dirPlayer.x / Mathf.Abs(dirPlayer.x) * -1;
-            movVertical = 0;
+            timeTemp += Time.deltaTime;
+            if (timeTemp >= Random.Range(1, 3))
+            {
+                movVertical = Random.Range(-1, 2);
+            }
         }
         else
         {
@@ -184,16 +278,21 @@ public class EnemyA : MonoBehaviour
 
     private IEnumerator EndChase()
     {
-        print("chamei aqui");
         yield return new WaitForSeconds(chaseTime);
-        print("esperei o tempo");
         isChase = false;
         ChangeState(EnemyState.Escape);
     }
 
     public void ChangeState(EnemyState newState)
     {
-        currentState = newState;
+        if (isBoss && isInPosition)
+        {
+            currentState = newState;
+        }
+        else if (!isBoss)
+        {
+            currentState = newState;
+        }
     }
 
     private void FlipController()
@@ -225,7 +324,7 @@ public class EnemyA : MonoBehaviour
             StopAttack();
         }
 
-        StartCoroutine(nameof (DelayHit));
+        StartCoroutine(nameof(DelayHit));
     }
 
     private IEnumerator DelayHit()
@@ -247,5 +346,20 @@ public class EnemyA : MonoBehaviour
     {
         StopCoroutine(nameof(Attack));
         canAttack = false;
+    }
+
+    public void SetIsPosition(bool value)
+    {
+        isPositionLeft = value;
+    }
+
+    public void SetIsBoss(bool value)
+    {
+        isBoss = value;
+    }
+
+    public void SetBoss(GameObject value)
+    {
+        _bossScript = value;
     }
 }

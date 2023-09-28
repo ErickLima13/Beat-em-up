@@ -41,8 +41,6 @@ public class Hitbox : MonoBehaviour
             if (col.gameObject.TryGetComponent(out Status status))
             {
                 status.HealthChange(damage);
-
-                print(damage);
             }
 
             isHit = true;
