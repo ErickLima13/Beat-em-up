@@ -5,19 +5,15 @@ using Random = UnityEngine.Random;
 
 public class Boss : MonoBehaviour
 {
+    #region Base
+    [Header("base")]
     public EnemyState currentState;
-
     private PlayerController playerController;
     private Animator animator;
     private Rigidbody enemyRb;
-
     private float movHorizontal, movVertical;
     private float posXplayer, posZplayer;
-
     private Vector3 dirPlayer;
-
-    #region Base
-    [Header("base")]
     [SerializeField] private float speed;
     [SerializeField] private float maxDistancePlayer;
     [SerializeField] private float percStopAttack;
@@ -41,6 +37,16 @@ public class Boss : MonoBehaviour
     private float timeTemp;
     private bool isWalk;
     private float walkTime;
+
+    [SerializeField] private bool isOnTheGround;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Vector2 boxSize;
+
+    public bool isJump;
+
+
+    public GameObject impactPrefab;
 
     private void Start()
     {
@@ -72,6 +78,20 @@ public class Boss : MonoBehaviour
         Movement();
     }
 
+
+    private void FixedUpdate()
+    {
+        var hitColliders = Physics.OverlapBox(groundCheck.position, boxSize, Quaternion.identity, groundMask);
+        isOnTheGround = hitColliders.Length > 0;
+
+        if (currentState.Equals(EnemyState.BossAttack) && isOnTheGround && isJump)
+        {
+            ChangeState(EnemyState.Idle);
+            GameObject temp = Instantiate(impactPrefab,transform.position,transform.localRotation);
+            Destroy(temp, 0.6f);
+            isJump = false;
+        }
+    }
     private void Movement()
     {
         posXplayer = playerController.transform.position.x;
@@ -92,7 +112,12 @@ public class Boss : MonoBehaviour
             animator.SetBool("walk", false);
         }
 
-        enemyRb.velocity = new Vector3(movHorizontal * speed, enemyRb.velocity.y, movVertical * speed);
+
+        if (currentState != EnemyState.BossAttack)
+        {
+            enemyRb.velocity = new Vector3(movHorizontal * speed, enemyRb.velocity.y, movVertical * speed);
+        }
+        
     }
 
 
@@ -248,6 +273,20 @@ public class Boss : MonoBehaviour
     {
         StopCoroutine(nameof(Attack));
         canAttack = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(groundCheck.position, boxSize);
+    }
+
+    public void JumpAttack()
+    {
+        ChangeState(EnemyState.BossAttack);
+
+         Vector3 force = new(Mathf.Clamp(dirPlayer.x,-1,1) * 100, 150, Mathf.Clamp(dirPlayer.z, -1, 1) * 40);
+
+        enemyRb.AddForce(force);
     }
 }
 

@@ -40,13 +40,21 @@ public class BossController : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         _boss.ChangeState(EnemyState.Chase);
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(2);
 
         _boss.ChangeState(EnemyState.Escape);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
 
         _boss.ChangeState(EnemyState.Idle);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
+
+        _boss.JumpAttack();
+        yield return new WaitForSeconds(0.3f);
+        _boss.isJump = true;
+
+        yield return new WaitForSeconds(2);
+        _boss.ChangeState(EnemyState.Idle);
+       
 
         StartCoroutine(ControlBoss());
     }

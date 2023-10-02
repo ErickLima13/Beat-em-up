@@ -156,8 +156,9 @@ Transform:
   m_Children:
   - {fileID: 8278461118596227961}
   - {fileID: 1663251115764013884}
+  - {fileID: 3107197796821966574}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &192746556679816136
 Rigidbody:
@@ -213,6 +214,12 @@ MonoBehaviour:
   safeDistance: 0.5
   minTime: 1
   maxTime: 4
+  isOnTheGround: 0
+  groundCheck: {fileID: 3107197796821966574}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  boxSize: {x: 0.17, y: 0.02}
 --- !u!136 &4510215271753409025
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -256,6 +263,37 @@ MonoBehaviour:
   charPicture: {fileID: -1349469814, guid: 785a76db5a5518d4d80203d664910bba, type: 3}
   isEnemy: 1
   isLackey: 0
+--- !u!1 &6165136170656982057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3107197796821966574}
+  m_Layer: 3
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3107197796821966574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6165136170656982057}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.071, y: -0.005, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8211626575591014546}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7314802699846318005
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,19 +5,15 @@ using Random = UnityEngine.Random;
 
 public class EnemyA : MonoBehaviour
 {
+    #region Base
+    [Header("base")]
     public EnemyState currentState;
-
     private PlayerController playerController;
     private Animator animator;
     private Rigidbody enemyRb;
-
     private float movHorizontal, movVertical;
     private float posXplayer, posZplayer;
-
     private Vector3 dirPlayer;
-
-    #region Base
-    [Header("base")]
     [SerializeField] private float speed;
     [SerializeField] private float maxDistancePlayer;
     [SerializeField] private float percStopAttack;
@@ -25,6 +21,8 @@ public class EnemyA : MonoBehaviour
     [SerializeField] private bool canHit;
     [SerializeField] private bool isPositionLeft;
     private IsVisible visible;
+    public bool isVisible;
+    private bool isInPosition;
     #endregion
 
     #region Chase
@@ -46,10 +44,6 @@ public class EnemyA : MonoBehaviour
 
     public GameObject _bossScript;
     public bool isBoss;
-    private bool isInPosition;
-
-    public bool isVisible;
-
 
     private void Start()
     {
