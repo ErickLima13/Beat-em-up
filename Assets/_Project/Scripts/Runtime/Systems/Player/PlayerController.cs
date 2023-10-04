@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
+
     private void Start()
     {
         isAlive = true;

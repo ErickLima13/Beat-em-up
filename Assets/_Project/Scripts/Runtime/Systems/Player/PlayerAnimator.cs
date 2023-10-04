@@ -1,13 +1,10 @@
 using System.Collections;
-using System.Reflection;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
     private PlayerController playerController;
     private Status _status;
-
-    [SerializeField] private float delayTime;
 
     [SerializeField] private GameObject hitBoxPrefab;
 
@@ -16,8 +13,6 @@ public class PlayerAnimator : MonoBehaviour
     public GameObject temp;
 
     public ObjectPool objectPool;
-
-    private bool canHit;
 
     public Animator Animator
     {
@@ -34,15 +29,12 @@ public class PlayerAnimator : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
         _status = GetComponentInParent<Status>();
         Animator = GetComponent<Animator>();
-
         _status.OnDie += Die;
-        _status.OnPlayerDamage += GetHit;
     }
 
     private void OnDestroy()
     {
         _status.OnDie -= Die;
-        _status.OnPlayerDamage -= GetHit;
     }
 
     private void Update()
@@ -63,7 +55,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void EndAttack()
     {
-       StartCoroutine(StopAttack());
+        StartCoroutine(StopAttack());
     }
 
     private IEnumerator StopAttack()
@@ -80,7 +72,7 @@ public class PlayerAnimator : MonoBehaviour
             temp.transform.position = hitBoxPostionA.position;
             temp.transform.localRotation = transform.localRotation;
             temp.GetComponent<Hitbox>().SetIdvalue(playerController.idAttack);
-            objectPool.ReturnObject(temp, 0.5f);    
+            objectPool.ReturnObject(temp, 0.5f);
         }
         else
         {
@@ -108,15 +100,7 @@ public class PlayerAnimator : MonoBehaviour
         {
             SetIsAttack(false);
             Animator.SetTrigger("hit");
-            StartCoroutine(nameof(DelayHit));
-        }   
-    }
-
-    private IEnumerator DelayHit()
-    {
-        canHit = true;
-        yield return new WaitForSeconds(delayTime);
-        canHit = false;
+        }
     }
 
     private void UpdateAnimator()

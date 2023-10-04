@@ -93,10 +93,10 @@ public class Boss : MonoBehaviour
 
         if (currentState.Equals(EnemyState.BossAttack) && isOnTheGround && isJump)
         {
-            ChangeState(EnemyState.Idle);
-            GameObject temp = Instantiate(impactPrefab,transform.position,transform.localRotation);
+            GameObject temp = Instantiate(impactPrefab, transform.position, transform.localRotation);
             Destroy(temp, 0.6f);
             isJump = false;
+            ChangeState(EnemyState.Idle);
         }
     }
     private void Movement()
@@ -124,7 +124,7 @@ public class Boss : MonoBehaviour
         {
             enemyRb.velocity = new Vector3(movHorizontal * speed, enemyRb.velocity.y, movVertical * speed);
         }
-        
+
     }
 
 
@@ -209,7 +209,7 @@ public class Boss : MonoBehaviour
         timeTemp += Time.deltaTime;
         if (timeTemp >= Random.Range(1, 3))
         {
-            movVertical = Random.Range(-1,2);
+            movVertical = Random.Range(-1, 2);
         }
     }
 
@@ -291,7 +291,7 @@ public class Boss : MonoBehaviour
     {
         ChangeState(EnemyState.BossAttack);
 
-         Vector3 force = new(Mathf.Clamp(dirPlayer.x,-1,1) * 100, 150, Mathf.Clamp(dirPlayer.z, -1, 1) * 40);
+        Vector3 force = new(Mathf.Clamp(dirPlayer.x, -1, 1) * 100, 150, Mathf.Clamp(dirPlayer.z, -1, 1) * 40);
 
         enemyRb.AddForce(force);
     }

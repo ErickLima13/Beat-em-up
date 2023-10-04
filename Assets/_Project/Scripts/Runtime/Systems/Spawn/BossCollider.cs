@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossCollider : MonoBehaviour
@@ -27,6 +24,7 @@ public class BossCollider : MonoBehaviour
 
     private void ColliderWithPlayer()
     {
+        print("COLID");
         _spawnManager.BattleBoss();
     }
 }

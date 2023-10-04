@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 public class Status : MonoBehaviour
 {
     public event Action OnDie;
-    public event Action OnPlayerDamage;
 
     private UIManager _uIManager;
     private SpawnManager _spawnManager;
@@ -31,7 +30,7 @@ public class Status : MonoBehaviour
         if (isEnemy)
         {
             charName = randomNames[Random.Range(0, randomNames.Length)];
-           
+
         }
 
         if (GetComponent<EnemyA>() != null)
@@ -42,8 +41,6 @@ public class Status : MonoBehaviour
 
     public void HealthChange(int value)
     {
-        //GameObject temp = Instantiate(hitPrefab, transform.position, Quaternion.identity);
-        //Destroy(temp, 0.5f);
         currentLife -= value;
 
         float perc = currentLife / (float)maxLife;
@@ -60,11 +57,10 @@ public class Status : MonoBehaviour
         else
         {
             _uIManager.UpdateHpBarPlayer(perc);
-            OnPlayerDamage?.Invoke();
         }
 
         CheckDeath();
-        
+
     }
 
     private void CheckDeath()

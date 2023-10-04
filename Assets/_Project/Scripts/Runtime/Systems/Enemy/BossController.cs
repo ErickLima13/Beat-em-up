@@ -23,9 +23,7 @@ public class BossController : MonoBehaviour
     {
         _sceneryManager = GetComponent<SceneryManager>();
         _spawn = GetComponent<SpawnManager>();
-
-        _sceneryManager.OnBattleBoss += StartControl;
-       
+        _sceneryManager.OnBattleBoss += StartControl;   
     }
 
     private void OnDestroy()
@@ -51,13 +49,15 @@ public class BossController : MonoBehaviour
 
     private void StartControl()
     {
-        print(" BOSS BATTLE");
+       
 
         StartCoroutine(ControlBoss());
     }
 
     private IEnumerator ControlBoss()
     {
+        print(" BOSS BATTLE");
+
         yield return new WaitForSeconds(2);
 
         _boss.ChangeState(EnemyState.Chase);
