@@ -36,7 +36,16 @@ public class Hitbox : MonoBehaviour
                 }
             }
 
-            col.gameObject.SendMessage("GetHit", SendMessageOptions.DontRequireReceiver);
+
+            if (col.gameObject.TryGetComponent(out EnemyBase enemy))
+            {
+                enemy.GetHit();
+            }
+
+            if (col.gameObject.TryGetComponent(out PlayerAnimator player))
+            {
+                player.GetHit();
+            }
 
             if (col.gameObject.TryGetComponent(out Status status))
             {

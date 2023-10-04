@@ -71,7 +71,7 @@ public class Status : MonoBehaviour
             {
                 if (isLackey)
                 {
-                    _boss.SendMessage("RemoveLackeys", gameObject, SendMessageOptions.DontRequireReceiver);
+                    _boss.GetComponent<BossController>().RemoveLackeys(gameObject);
                 }
                 else
                 {

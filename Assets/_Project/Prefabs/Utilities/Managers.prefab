@@ -111,7 +111,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  _disableTime: 2
+  _disableTime: 0.5
   _nameEnemy: {fileID: 0}
   _pictureEnemy: {fileID: 0}
   _hpBarPlayer: {fileID: 0}

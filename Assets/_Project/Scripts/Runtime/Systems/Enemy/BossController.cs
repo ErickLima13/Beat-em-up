@@ -96,15 +96,15 @@ public class BossController : MonoBehaviour
 
                     if (percMov > 80)
                     {
-                        enemy.SendMessage("ChangeState", EnemyState.Positioning, SendMessageOptions.DontRequireReceiver);
+                        enemy.GetComponent<EnemyBase>().ChangeState(EnemyState.Positioning);
                     }
                     else if (percMov > 45)
                     {
-                        enemy.SendMessage("ChangeState", EnemyState.Patrol, SendMessageOptions.DontRequireReceiver);
+                        enemy.GetComponent<EnemyBase>().ChangeState(EnemyState.Patrol);
                     }
                     else
                     {
-                        enemy.SendMessage("ChangeState", EnemyState.Chase, SendMessageOptions.DontRequireReceiver);
+                        enemy.GetComponent<EnemyBase>().ChangeState(EnemyState.Chase);
                     }
                 }
 
@@ -142,10 +142,10 @@ public class BossController : MonoBehaviour
         }
 
         GameObject temp = Instantiate(_lackeys[Random.Range(0,_lackeys.Length)], posIns, transform.localRotation);
-        temp.SendMessage("SetIsPosition", isLeft, SendMessageOptions.DontRequireReceiver);
-        temp.SendMessage("SetIsBoss", true, SendMessageOptions.DontRequireReceiver);
-        temp.SendMessage("SetBoss", gameObject, SendMessageOptions.DontRequireReceiver);
-        temp.SendMessage("ChangeState", EnemyState.Chase, SendMessageOptions.DontRequireReceiver);
+        EnemyBase enemy = temp.GetComponent<EnemyBase>();
+        enemy.SetIsPosition(isLeft);
+        enemy.SetBoss(gameObject);
+        enemy.ChangeState(EnemyState.Chase);
         _lackeysInScene.Add(temp);
     }
 

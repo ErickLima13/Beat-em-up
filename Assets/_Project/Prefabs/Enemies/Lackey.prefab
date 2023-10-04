@@ -201,7 +201,7 @@ Transform:
   - {fileID: 356969897433945720}
   - {fileID: 2106084939656980945}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4231189669527231584
 Rigidbody:
@@ -265,13 +265,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0647241b8931545bc337d068407a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 1
+  currentState: 0
   speed: 0.2
   maxDistancePlayer: 0.25
   percStopAttack: 50
   isLookLeft: 0
   canHit: 0
   isPositionLeft: 1
+  isVisible: 0
   delayTime: 1
   delayAttack: 0.1
   delayNewAttack: 1
@@ -282,8 +283,8 @@ MonoBehaviour:
   minTime: 1
   maxTime: 4
   _bossScript: {fileID: 0}
-  isBoss: 0
-  isVisible: 0
+  isBoss: 1
+  iamBoss: 0
 --- !u!114 &7656949292257754878
 MonoBehaviour:
   m_ObjectHideFlags: 0

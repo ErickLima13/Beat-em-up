@@ -66,15 +66,15 @@ public class SpawnManager : MonoBehaviour
 
                         if (percMov < 50)
                         {
-                            enemy.SendMessage("ChangeState", EnemyState.Escape, SendMessageOptions.DontRequireReceiver);
+                            enemy.GetComponent<EnemyBase>().ChangeState(EnemyState.Escape);
                         }
                         else
                         {
-                            enemy.SendMessage("ChangeState", EnemyState.Patrol, SendMessageOptions.DontRequireReceiver);
+                            enemy.GetComponent<EnemyBase>().ChangeState(EnemyState.Patrol);
                         }
                     }
 
-                    _enemiesActive[id].SendMessage("ChangeState", EnemyState.Chase, SendMessageOptions.DontRequireReceiver);
+                    _enemiesActive[id].GetComponent<EnemyBase>().ChangeState(EnemyState.Chase);
                     tempTime = 0;
                     isActive = false;
                 }

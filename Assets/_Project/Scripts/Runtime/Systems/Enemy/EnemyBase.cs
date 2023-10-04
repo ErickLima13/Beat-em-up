@@ -8,44 +8,50 @@ public class EnemyBase : MonoBehaviour
     #region Base
     [Header("base")]
     public EnemyState currentState;
-    private SpawnManager _spawnManager;
-    private PlayerController _playerController;
-    private Animator _animator;
-    private Rigidbody _enemyRb;
-    private float movHorizontal, movVertical;
-    private float posXplayer, posZplayer;
-    private Vector3 dirPlayer;
-    [SerializeField] private float speed;
-    [SerializeField] private float maxDistancePlayer;
-    [SerializeField] private float percStopAttack;
-    [SerializeField] private bool isLookLeft;
-    [SerializeField] private bool canHit;
-    [SerializeField] private bool isPositionLeft;
-    private IsVisible visible;
+    protected SpawnManager _spawnManager;
+    protected PlayerController _playerController;
+    protected Animator _animator;
+    protected Rigidbody _enemyRb;
+    protected float movHorizontal, movVertical;
+    protected float posXplayer, posZplayer;
+    protected Vector3 dirPlayer;
+    [SerializeField] protected float speed;
+    [SerializeField] protected float maxDistancePlayer;
+    [SerializeField] protected float percStopAttack;
+    [SerializeField] protected bool isLookLeft;
+    [SerializeField] protected bool canHit;
+    [SerializeField] protected bool isPositionLeft;
+    protected IsVisible visible;
     public bool isVisible;
-    private bool isInPosition;
+    protected bool isInPosition;
     #endregion
 
     #region Chase
     [Header("Chase")]
-    [SerializeField] private float delayTime;
-    [SerializeField] private float delayAttack;
-    [SerializeField] private float delayNewAttack;
-    [SerializeField] private float chaseTime;
-    [SerializeField] private bool canAttack;
-    [SerializeField] private bool isChase;
+    [SerializeField] protected float delayTime;
+    [SerializeField] protected float delayAttack;
+    [SerializeField] protected float delayNewAttack;
+    [SerializeField] protected float chaseTime;
+    [SerializeField] protected bool canAttack;
+    [SerializeField] protected bool isChase;
     #endregion
 
     [Header("Escape")]
-    [SerializeField] private float safeDistance;
-    [SerializeField] private float minTime, maxTime;
-    private float timeTemp;
-    private bool isWalk;
-    private float walkTime;
+    [SerializeField] protected float safeDistance;
+    [SerializeField] protected float minTime, maxTime;
+    protected float timeTemp;
+    protected bool isWalk;
+    protected float walkTime;
 
+    [Header("Lackey")]
     #region Lackey
     public GameObject _bossScript;
     public bool isBoss;
+    #endregion
+
+    [Header("Boss")]
+    #region Boss
+    public bool iamBoss;
     #endregion
 
     private void Start()
@@ -57,29 +63,11 @@ public class EnemyBase : MonoBehaviour
         visible = GetComponentInChildren<IsVisible>();
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (isBoss && _spawnManager._currentGame != GameState.Battleboss)
         {
             return;
-        }
-
-        switch (currentState)
-        {
-            case EnemyState.Idle:
-                movHorizontal = 0;
-                movVertical = 0;
-                FlipController();
-                break;
-            case EnemyState.Patrol:
-                Patrol();
-                break;
-            case EnemyState.Chase:
-                Chase();
-                break;
-            case EnemyState.Escape:
-                Escape();
-                break;
         }
 
         Movement();
@@ -105,7 +93,15 @@ public class EnemyBase : MonoBehaviour
             _animator.SetBool("walk", false);
         }
 
-        _enemyRb.velocity = new Vector3(movHorizontal * speed, _enemyRb.velocity.y, movVertical * speed);
+        if (currentState != EnemyState.BossAttack && iamBoss)
+        {
+            _enemyRb.velocity = new Vector3(movHorizontal * speed, _enemyRb.velocity.y, movVertical * speed);
+        }
+
+        if (!iamBoss)
+        {
+            _enemyRb.velocity = new Vector3(movHorizontal * speed, _enemyRb.velocity.y, movVertical * speed);
+        }
 
         CheckIfIsInPosition();
         CheckIsVisible();
@@ -158,7 +154,7 @@ public class EnemyBase : MonoBehaviour
 
     #region States
 
-    private void Positioning()
+    protected void Positioning()
     {
         if (isPositionLeft)
         {
@@ -182,7 +178,7 @@ public class EnemyBase : MonoBehaviour
         FlipController();
     }
 
-    private void Patrol()
+    protected void Patrol()
     {
         float perc = safeDistance * 0.5f;
 
@@ -222,7 +218,7 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    private void Chase()
+    protected void Chase()
     {
         FlipController();
 
@@ -255,7 +251,7 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    private void Escape()
+    protected void Escape()
     {
         FlipController();
 
@@ -295,7 +291,7 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    private void FlipController()
+    protected void FlipController()
     {
         if (transform.position.x < posXplayer && isLookLeft)
         {
@@ -346,5 +342,15 @@ public class EnemyBase : MonoBehaviour
     {
         StopCoroutine(nameof(Attack));
         canAttack = false;
+    }
+
+    public void SetIsPosition(bool value)
+    {
+        isPositionLeft = value;
+    }
+
+    public void SetBoss(GameObject value)
+    {
+        _bossScript = value;
     }
 }

@@ -1,68 +1,19 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Boss : MonoBehaviour
+public class Boss : EnemyBase
 {
-    #region Base
-    [Header("base")]
-    public EnemyState currentState;
-    private PlayerController playerController;
-    private Animator animator;
-    private Rigidbody enemyRb;
-    private float movHorizontal, movVertical;
-    private float posXplayer, posZplayer;
-    private Vector3 dirPlayer;
-    [SerializeField] private float speed;
-    [SerializeField] private float maxDistancePlayer;
-    [SerializeField] private float percStopAttack;
-    [SerializeField] private bool isLookLeft;
-    [SerializeField] private bool canHit;
-    #endregion
-
-    #region Chase
-    [Header("Chase")]
-    [SerializeField] private float delayTime;
-    [SerializeField] private float delayAttack;
-    [SerializeField] private float delayNewAttack;
-    [SerializeField] private float chaseTime;
-    [SerializeField] private bool canAttack;
-    [SerializeField] private bool isChase;
-    #endregion
-
-    [Header("Escape")]
-    [SerializeField] private float safeDistance;
-    [SerializeField] private float minTime, maxTime;
-    private float timeTemp;
-    private bool isWalk;
-    private float walkTime;
-
     [SerializeField] private bool isOnTheGround;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Vector2 boxSize;
 
     public bool isJump;
-
     public GameObject impactPrefab;
 
-    private SpawnManager _spawnManager;
-
-    private void Start()
+    public override void Update()
     {
-        _spawnManager = FindObjectOfType<SpawnManager>();
-        playerController = FindObjectOfType<PlayerController>();
-        enemyRb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
-    }
-
-    private void Update()
-    {
-        if (_spawnManager._currentGame != GameState.Battleboss)
-        {
-            return;
-        }
+        base.Update();
 
         switch (currentState)
         {
@@ -78,11 +29,9 @@ public class Boss : MonoBehaviour
                 Chase();
                 break;
             case EnemyState.Escape:
-                Escape();
+                EscapeBoss();
                 break;
         }
-
-        Movement();
     }
 
 
@@ -99,110 +48,8 @@ public class Boss : MonoBehaviour
             ChangeState(EnemyState.Idle);
         }
     }
-    private void Movement()
-    {
-        posXplayer = playerController.transform.position.x;
-        posZplayer = playerController.transform.position.z;
-        dirPlayer = playerController.transform.position - transform.position;
 
-        if (float.IsNaN(movHorizontal))
-            movHorizontal = 0;
-        if (float.IsNaN(movVertical))
-            movVertical = 0;
-
-        if (movHorizontal != 0 || movVertical != 0)
-        {
-            animator.SetBool("walk", true);
-        }
-        else if (movHorizontal == 0 && movVertical == 0)
-        {
-            animator.SetBool("walk", false);
-        }
-
-
-        if (currentState != EnemyState.BossAttack)
-        {
-            enemyRb.velocity = new Vector3(movHorizontal * speed, enemyRb.velocity.y, movVertical * speed);
-        }
-
-    }
-
-
-    #region States
-    private void Patrol()
-    {
-        float perc = safeDistance * 0.5f;
-
-        if (MathF.Abs(dirPlayer.x) <= perc)
-        {
-            ChangeState(EnemyState.Chase);
-            if (!isChase)
-            {
-                isChase = true;
-                StartCoroutine(nameof(EndChase));
-            }
-        }
-
-        timeTemp += Time.deltaTime;
-
-        if (!isWalk)
-        {
-            movHorizontal = Random.Range(-1, 2);
-            movVertical = Random.Range(-1, 2);
-            walkTime = Random.Range(minTime, maxTime);
-            isWalk = true;
-
-            if (movHorizontal < 0 && !isLookLeft)
-            {
-                Flip();
-            }
-            else if (movHorizontal > 0 && isLookLeft)
-            {
-                Flip();
-            }
-        }
-
-        if (timeTemp >= walkTime)
-        {
-            timeTemp = 0;
-            isWalk = false;
-        }
-    }
-
-    private void Chase()
-    {
-        FlipController();
-
-        if (!canHit && !canAttack)
-        {
-            movHorizontal = dirPlayer.x / Mathf.Abs(dirPlayer.x);
-            movVertical = dirPlayer.z / Mathf.Abs(dirPlayer.z);
-        }
-        else
-        {
-            movHorizontal = 0;
-            movVertical = 0;
-        }
-
-        if (MathF.Abs(dirPlayer.x) <= maxDistancePlayer && MathF.Abs(dirPlayer.z) <= 0.2f)
-        {
-            movHorizontal = 0;
-            if (!canAttack)
-            {
-                if (!canHit)
-                {
-                    canAttack = true;
-                    StartCoroutine(nameof(Attack));
-                }
-            }
-        }
-        else if (MathF.Abs(dirPlayer.x) > maxDistancePlayer)
-        {
-            StopAttack();
-        }
-    }
-
-    private void Escape()
+    private void EscapeBoss()
     {
         FlipController();
         movHorizontal = dirPlayer.x / Mathf.Abs(dirPlayer.x) * -1;
@@ -213,75 +60,6 @@ public class Boss : MonoBehaviour
         }
     }
 
-    #endregion
-
-    private IEnumerator EndChase()
-    {
-        print("chamei aqui");
-        yield return new WaitForSeconds(chaseTime);
-        print("esperei o tempo");
-        isChase = false;
-        ChangeState(EnemyState.Escape);
-    }
-
-    public void ChangeState(EnemyState newState)
-    {
-        currentState = newState;
-    }
-
-    private void FlipController()
-    {
-        if (transform.position.x < posXplayer && isLookLeft)
-        {
-            Flip();
-        }
-        else if (transform.position.x > posXplayer && !isLookLeft)
-        {
-            Flip();
-        }
-    }
-
-    private void Flip()
-    {
-        isLookLeft = !isLookLeft;
-        float x = transform.localScale.x;
-        x *= -1;
-        transform.localScale = new(x, transform.localScale.y, transform.localScale.z);
-    }
-
-    public void GetHit()
-    {
-        ChangeState(EnemyState.Chase);
-
-        if (Random.Range(0, 100) <= percStopAttack)
-        {
-            StopAttack();
-        }
-
-        StartCoroutine(nameof(DelayHit));
-    }
-
-    private IEnumerator DelayHit()
-    {
-        canHit = true;
-        yield return new WaitForSeconds(delayTime);
-        canHit = false;
-    }
-
-    private IEnumerator Attack()
-    {
-        yield return new WaitForSeconds(delayAttack);
-        animator.SetTrigger("attack");
-        yield return new WaitForSeconds(delayNewAttack);
-        canAttack = false;
-    }
-
-    private void StopAttack()
-    {
-        StopCoroutine(nameof(Attack));
-        canAttack = false;
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(groundCheck.position, boxSize);
@@ -290,10 +68,8 @@ public class Boss : MonoBehaviour
     public void JumpAttack()
     {
         ChangeState(EnemyState.BossAttack);
-
         Vector3 force = new(Mathf.Clamp(dirPlayer.x, -1, 1) * 100, 150, Mathf.Clamp(dirPlayer.z, -1, 1) * 40);
-
-        enemyRb.AddForce(force);
+        _enemyRb.AddForce(force);
     }
 }
 
