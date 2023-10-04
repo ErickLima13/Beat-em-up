@@ -51,11 +51,14 @@ public class PlayerController : MonoBehaviour
 
     public Transform limitXMinus, limitXPlus;
 
+    private SpawnManager _spawnManager;
+
     private void Start()
     {
         isAlive = true;
         playerRb = GetComponent<Rigidbody>();
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
+        _spawnManager = FindObjectOfType<SpawnManager>();
     }
 
     private void Update()
@@ -69,7 +72,7 @@ public class PlayerController : MonoBehaviour
             transform.position = new(limitXPlus.position.x, transform.position.y, transform.position.z);
         }
 
-        if (isAlive)
+        if (isAlive && _spawnManager._currentGame != GameState.Cutscene)
         {
             Movement();
         }
@@ -77,6 +80,7 @@ public class PlayerController : MonoBehaviour
         {
             horizontal = 0;
             vertical = 0;
+            IsWalk = false;
         }
     }
 

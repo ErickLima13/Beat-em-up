@@ -2,8 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    Gameplay,
+    Cutscene,
+    Battleboss
+}
+
 public class SpawnManager : MonoBehaviour
 {
+    public GameState _currentGame;
+
     public Camera _camera;
     public PlayerController _playerController;
     private SceneryManager _sceneryManager;
@@ -19,6 +28,8 @@ public class SpawnManager : MonoBehaviour
     private float tempTime, routineTime;
     private bool isActive;
 
+    public Transform bossPoint;
+
     private void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
@@ -33,39 +44,44 @@ public class SpawnManager : MonoBehaviour
 
     private void ControlEnemies()
     {
-        if (_enemiesActive.Count > 0)
+        if (_currentGame == GameState.Gameplay)
         {
-            if (!isActive)
+            if (_enemiesActive.Count > 0)
             {
-                routineTime = Random.Range(minTime, maxTime);
-                isActive = true;
-            }
-
-            tempTime += Time.deltaTime;
-
-            if (tempTime >= routineTime)
-            {
-                int id = Random.Range(0, _enemiesActive.Count);
-
-                foreach (GameObject enemy in _enemiesActive)
+                if (!isActive)
                 {
-                    int percMov = Random.Range(0, 99);
-
-                    if (percMov < 50)
-                    {
-                        enemy.SendMessage("ChangeState", EnemyState.Escape, SendMessageOptions.DontRequireReceiver);
-                    }
-                    else
-                    {
-                        enemy.SendMessage("ChangeState", EnemyState.Patrol, SendMessageOptions.DontRequireReceiver);
-                    }
+                    routineTime = Random.Range(minTime, maxTime);
+                    isActive = true;
                 }
 
-                _enemiesActive[id].SendMessage("ChangeState", EnemyState.Chase, SendMessageOptions.DontRequireReceiver);
-                tempTime = 0;
-                isActive = false;
+                tempTime += Time.deltaTime;
+
+                if (tempTime >= routineTime)
+                {
+                    int id = Random.Range(0, _enemiesActive.Count);
+
+                    foreach (GameObject enemy in _enemiesActive)
+                    {
+                        int percMov = Random.Range(0, 99);
+
+                        if (percMov < 50)
+                        {
+                            enemy.SendMessage("ChangeState", EnemyState.Escape, SendMessageOptions.DontRequireReceiver);
+                        }
+                        else
+                        {
+                            enemy.SendMessage("ChangeState", EnemyState.Patrol, SendMessageOptions.DontRequireReceiver);
+                        }
+                    }
+
+                    _enemiesActive[id].SendMessage("ChangeState", EnemyState.Chase, SendMessageOptions.DontRequireReceiver);
+                    tempTime = 0;
+                    isActive = false;
+                }
             }
         }
+
+        
     }
 
     public void StartSpawn()
@@ -107,5 +123,10 @@ public class SpawnManager : MonoBehaviour
         {
             _sceneryManager.SetFollow(true);
         }
+    }
+
+    public void BattleBoss()
+    {
+        _currentGame = GameState.Cutscene;
     }
 }

@@ -1,0 +1,32 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BossCollider : MonoBehaviour
+{
+    private SpawnManager _spawnManager;
+
+    private void Start()
+    {
+        _spawnManager = FindObjectOfType<SpawnManager>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_spawnManager._currentGame != GameState.Gameplay)
+        {
+            return;
+        }
+
+        if (other.gameObject.TryGetComponent(out PlayerController controller))
+        {
+            ColliderWithPlayer();
+        }
+    }
+
+    private void ColliderWithPlayer()
+    {
+        _spawnManager.BattleBoss();
+    }
+}

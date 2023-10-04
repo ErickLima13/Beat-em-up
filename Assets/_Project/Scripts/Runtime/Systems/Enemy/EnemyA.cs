@@ -45,9 +45,12 @@ public class EnemyA : MonoBehaviour
     public GameObject _bossScript;
     public bool isBoss;
 
+    private SpawnManager _spawnManager;
+
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
+        _spawnManager = FindObjectOfType<SpawnManager>();
         enemyRb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         visible = GetComponentInChildren<IsVisible>();
@@ -55,6 +58,11 @@ public class EnemyA : MonoBehaviour
 
     private void Update()
     {
+        if (isBoss && _spawnManager._currentGame != GameState.Battleboss)
+        {
+            return;
+        }
+
         switch (currentState)
         {
             case EnemyState.Idle:

@@ -45,11 +45,13 @@ public class Boss : MonoBehaviour
 
     public bool isJump;
 
-
     public GameObject impactPrefab;
+
+    private SpawnManager _spawnManager;
 
     private void Start()
     {
+        _spawnManager = FindObjectOfType<SpawnManager>();
         playerController = FindObjectOfType<PlayerController>();
         enemyRb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
@@ -57,6 +59,11 @@ public class Boss : MonoBehaviour
 
     private void Update()
     {
+        if (_spawnManager._currentGame != GameState.Battleboss)
+        {
+            return;
+        }
+
         switch (currentState)
         {
             case EnemyState.Idle:

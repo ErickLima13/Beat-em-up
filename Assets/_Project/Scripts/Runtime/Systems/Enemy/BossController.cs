@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossController : MonoBehaviour
 {
     private SpawnManager _spawn;
+    private SceneryManager _sceneryManager;
 
     public Boss _boss;
     public GameObject[] _lackeys; // lacaios
@@ -20,12 +21,25 @@ public class BossController : MonoBehaviour
 
     private void Start()
     {
+        _sceneryManager = GetComponent<SceneryManager>();
         _spawn = GetComponent<SpawnManager>();
-        StartCoroutine(ControlBoss());
+
+        _sceneryManager.OnBattleBoss += StartControl;
+       
+    }
+
+    private void OnDestroy()
+    {
+        _sceneryManager.OnBattleBoss -= StartControl;
     }
 
     private void Update()
     {
+        if (_spawn._currentGame != GameState.Battleboss)
+        {
+            return;
+        }
+
         if (_lackeysInScene.Count < _quantityOfLackeys && !_canInstantiate)
         {
             _canInstantiate = true;
@@ -33,6 +47,13 @@ public class BossController : MonoBehaviour
         }
 
         ControlEnemies();
+    }
+
+    private void StartControl()
+    {
+        print(" BOSS BATTLE");
+
+        StartCoroutine(ControlBoss());
     }
 
     private IEnumerator ControlBoss()
@@ -51,10 +72,6 @@ public class BossController : MonoBehaviour
         _boss.JumpAttack();
         yield return new WaitForSeconds(0.3f);
         _boss.isJump = true;
-
-        yield return new WaitForSeconds(2);
-        _boss.ChangeState(EnemyState.Idle);
-       
 
         StartCoroutine(ControlBoss());
     }
@@ -101,7 +118,6 @@ public class BossController : MonoBehaviour
     private IEnumerator CallLackeys()
     {
         yield return new WaitForSeconds(_delaySpawnLackeys);
-        print("CHAMANDO");
 
         SpawnEnemy();
 
