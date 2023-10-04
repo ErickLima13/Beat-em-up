@@ -4596,6 +4596,22 @@ PrefabInstance:
       propertyPath: _bossScript
       value: 
       objectReference: {fileID: 3112801505199057670}
+    - target: {fileID: 1787488058176714729, guid: 6324d7f39c362054199dc5ff63ee04b9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.585
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049065442053729084, guid: 6324d7f39c362054199dc5ff63ee04b9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.3159997
+      objectReference: {fileID: 0}
+    - target: {fileID: 2907644899412601078, guid: 6324d7f39c362054199dc5ff63ee04b9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.3479991
+      objectReference: {fileID: 0}
+    - target: {fileID: 3253642657544089830, guid: 6324d7f39c362054199dc5ff63ee04b9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.825
+      objectReference: {fileID: 0}
     - target: {fileID: 4406220527757741511, guid: 6324d7f39c362054199dc5ff63ee04b9, type: 3}
       propertyPath: isLookLeft
       value: 1
@@ -4614,7 +4630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7884679522967917806, guid: 6324d7f39c362054199dc5ff63ee04b9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 6.84
       objectReference: {fileID: 0}
     - target: {fileID: 7884679522967917806, guid: 6324d7f39c362054199dc5ff63ee04b9, type: 3}
       propertyPath: m_LocalPosition.y
