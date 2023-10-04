@@ -24,7 +24,6 @@ public class BossCollider : MonoBehaviour
 
     private void ColliderWithPlayer()
     {
-        print("COLID");
         _spawnManager.BattleBoss();
     }
 }
