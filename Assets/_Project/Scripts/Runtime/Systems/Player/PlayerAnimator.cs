@@ -30,11 +30,16 @@ public class PlayerAnimator : MonoBehaviour
         _status = GetComponentInParent<Status>();
         Animator = GetComponent<Animator>();
         _status.OnDie += Die;
+
+
+
+        _status.OnPlayerTakeHit += GetHit;
     }
 
     private void OnDestroy()
     {
         _status.OnDie -= Die;
+        _status.OnPlayerTakeHit += GetHit;
     }
 
     private void Update()
@@ -100,6 +105,8 @@ public class PlayerAnimator : MonoBehaviour
         {
             SetIsAttack(false);
             Animator.SetTrigger("hit");
+
+            print("CHAMEI");
         }
     }
 
@@ -110,4 +117,7 @@ public class PlayerAnimator : MonoBehaviour
         Animator.SetBool("onAir", playerController.IsAirKick);
         Animator.SetFloat("speedY", playerController.playerRb.velocity.y);
     }
+
+
+
 }

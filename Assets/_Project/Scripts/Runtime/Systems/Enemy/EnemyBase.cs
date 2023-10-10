@@ -54,13 +54,25 @@ public class EnemyBase : MonoBehaviour
     public bool iamBoss;
     #endregion
 
+    private Status _status;
+
+    [SerializeField] private GameObject soundHit;
+
     private void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
         _spawnManager = FindObjectOfType<SpawnManager>();
         _enemyRb = GetComponent<Rigidbody>();
+        _status = GetComponent<Status>();   
         _animator = GetComponentInChildren<Animator>();
         visible = GetComponentInChildren<IsVisible>();
+
+        _status.OnEnemyTakeHit += GetHit;
+    }
+
+    private void OnDestroy()
+    {
+        _status.OnEnemyTakeHit -= GetHit;
     }
 
     public virtual void Update()
@@ -325,9 +337,11 @@ public class EnemyBase : MonoBehaviour
 
     private IEnumerator DelayHit()
     {
+        soundHit.SetActive(true);
         canHit = true;
         yield return new WaitForSeconds(delayTime);
         canHit = false;
+        soundHit.SetActive(false);
     }
 
     private IEnumerator Attack()

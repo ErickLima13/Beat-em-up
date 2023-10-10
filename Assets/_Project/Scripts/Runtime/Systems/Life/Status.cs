@@ -6,6 +6,9 @@ public class Status : MonoBehaviour
 {
     public event Action OnDie;
 
+    public event Action OnEnemyTakeHit;
+    public event Action OnPlayerTakeHit;
+
     private UIManager _uIManager;
     private SpawnManager _spawnManager;
 
@@ -53,10 +56,12 @@ public class Status : MonoBehaviour
         if (isEnemy)
         {
             _uIManager.UpdateHpBar(perc, charName, charPicture);
+            OnEnemyTakeHit?.Invoke();
         }
         else
         {
             _uIManager.UpdateHpBarPlayer(perc);
+            OnPlayerTakeHit?.Invoke();
         }
 
         CheckDeath();

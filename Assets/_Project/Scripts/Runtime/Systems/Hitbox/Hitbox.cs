@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class Hitbox : MonoBehaviour
@@ -11,7 +12,6 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private bool isEnemy;
 
     private bool isHit;
-
 
     private void OnTriggerEnter(Collider col)
     {
@@ -34,17 +34,6 @@ public class Hitbox : MonoBehaviour
                         damage = 1;
                         break;
                 }
-            }
-
-
-            if (col.gameObject.TryGetComponent(out EnemyBase enemy))
-            {
-                enemy.GetHit();
-            }
-
-            if (col.gameObject.TryGetComponent(out PlayerAnimator player))
-            {
-                player.GetHit();
             }
 
             if (col.gameObject.TryGetComponent(out Status status))

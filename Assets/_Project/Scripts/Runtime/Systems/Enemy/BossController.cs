@@ -56,8 +56,6 @@ public class BossController : MonoBehaviour
 
     private IEnumerator ControlBoss()
     {
-        print(" BOSS BATTLE");
-
         yield return new WaitForSeconds(2);
 
         _boss.ChangeState(EnemyState.Chase);
