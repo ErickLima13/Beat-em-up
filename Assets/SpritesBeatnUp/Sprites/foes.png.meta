@@ -1007,7 +1007,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: foes_35
+      name: hp
       rect:
         serializedVersion: 2
         x: 14
@@ -1173,7 +1173,6 @@ TextureImporter:
       foes_32: 21300064
       foes_33: 21300066
       foes_34: 21300068
-      foes_35: 21300070
       foes_36: 21300072
       foes_37: 21300074
       foes_38: 21300076
@@ -1184,6 +1183,7 @@ TextureImporter:
       foes_7: 21300014
       foes_8: 21300016
       foes_9: 21300018
+      hp: 21300070
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
