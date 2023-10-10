@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490986a83b2ba6348a96d0b6514937d6, type: 3}
+  m_Name: ExampleEffectData
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 0}
+  Volume: 1
+  Pitch: 1
+  PitchVariation: 0
+  minDistance: 3
+  maxDistance: 500
+  Loop: 0
+  is3D: 1
+  mixerGroup: {fileID: -4844230323477258955, guid: ba4ab0d153b606b45a2584197de1085a,
+    type: 2}
